@@ -11,23 +11,28 @@ export const handleChat = async (req, res) => {
 
     // Try Gemini AI SDK if API Key is configured
     if (process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY !== 'your_gemini_api_key_here') {
-      try {
-        const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-        const response = await ai.models.generateContent({
-          model: 'gemini-2.5-flash',
-          contents: `You are Hoply AI Assistant, an expert AI helper for Hoply (a hyperlocal community task app). Currency is always in Rs. Answer helpful, friendly, and concise to: ${userPrompt}`,
-        });
+      const candidateModels = ['gemini-3.6-flash', 'gemini-3.5-flash', 'gemini-2.0-flash-lite', 'gemini-2.0-flash'];
+      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-        if (response?.text) {
-          return res.json({
-            reply: response.text,
-            sender: 'assistant',
-            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      for (const modelName of candidateModels) {
+        try {
+          const response = await ai.models.generateContent({
+            model: modelName,
+            contents: `You are Hoply AI Assistant, an expert AI helper for Hoply (a hyperlocal community task app). Currency is always in Rs. Answer helpful, friendly, clear, and concise to: ${userPrompt}`,
           });
+
+          if (response?.text) {
+            return res.json({
+              reply: response.text,
+              sender: 'assistant',
+              modelUsed: modelName,
+              timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            });
+          }
+        } catch (aiErr) {
+          console.warn(`[Gemini AI Model ${modelName} Warning]:`, aiErr.message);
+          // Try next model candidate
         }
-      } catch (aiErr) {
-        console.warn('[Gemini AI Warning]:', aiErr.message);
-        // Fallthrough to smart heuristics fallback below
       }
     }
 
@@ -46,6 +51,7 @@ export const handleChat = async (req, res) => {
     res.json({
       reply,
       sender: 'assistant',
+      modelUsed: 'heuristics-engine',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     });
   } catch (error) {

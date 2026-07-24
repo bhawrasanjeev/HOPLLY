@@ -42,7 +42,7 @@ export const TaskDetailPage: React.FC<TaskDetailPageProps> = ({
             <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <div style={{ position: 'relative' }}>
                 <div style={{ position: 'absolute', inset: '-8px', borderRadius: '50%', backgroundColor: 'rgba(22, 163, 74, 0.2)' }} className="animate-pulse-subtle" />
-                <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: 'var(--primary)', color: '#fff', display: 'flex', alignItems: 'center', justifycontent: 'center', border: '2px solid #fff', boxShadow: 'var(--shadow-lg)' }}>
+                <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: 'var(--primary)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid #fff', boxShadow: 'var(--shadow-lg)' }}>
                   <MapPin style={{ width: '24px', height: '24px', margin: '10px' }} />
                 </div>
               </div>

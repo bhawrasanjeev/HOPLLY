@@ -64,7 +64,7 @@ export const SignupPage: React.FC<SignupPageProps> = ({
   };
 
   return (
-    <main className="page-container" style={{ minHeight: '85vh', display: 'flex', alignItems: 'center', justifycontent: 'center' }}>
+    <main className="page-container" style={{ minHeight: '85vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <div className="auth-container">
         {/* Brand Header */}
         <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '8px' }}>
