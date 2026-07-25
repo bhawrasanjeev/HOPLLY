@@ -1,4 +1,4 @@
-import React from 'react';
+import type { FC } from 'react';
 
 interface LogoProps {
   size?: 'sm' | 'md' | 'lg';
@@ -6,7 +6,7 @@ interface LogoProps {
   className?: string;
 }
 
-export const Logo: React.FC<LogoProps> = ({ size = 'md', showText = true, className = '' }) => {
+export const Logo: FC<LogoProps> = ({ size = 'md', showText = true, className = '' }) => {
   return (
     <div className={`logo ${className}`}>
       {/* Brand Icon SVG matching user image (House roof + H structure + Green Location Pin + Search Glass) */}
@@ -29,7 +29,7 @@ export const Logo: React.FC<LogoProps> = ({ size = 'md', showText = true, classN
 
       {showText && (
         <span className={`logo-text logo-text--${size}`}>
-          Hoply
+          Hoplly
         </span>
       )}
     </div>

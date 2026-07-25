@@ -64,7 +64,7 @@ export const SignupPage: React.FC<SignupPageProps> = ({
   };
 
   return (
-    <main className="page-container" style={{ minHeight: '85vh', display: 'flex', alignItems: 'center', justifycontent: 'center' }}>
+    <main className="page-container" style={{ minHeight: '85vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <div className="auth-container">
         {/* Brand Header */}
         <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -72,7 +72,7 @@ export const SignupPage: React.FC<SignupPageProps> = ({
             <Logo size="lg" />
           </div>
           <h1 className="h1-title" style={{ fontSize: '1.5rem' }}>
-            Create Your Hoply Account
+            Create Your Hoplly Account
           </h1>
           <p className="text-xs text-muted">
             Join your hyperlocal neighborhood network to request or help with tasks

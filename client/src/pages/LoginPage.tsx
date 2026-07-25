@@ -67,7 +67,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
             <Logo size="lg" />
           </div>
           <h1 className="h1-title" style={{ fontSize: '1.5rem' }}>
-            Welcome Back to Hoply
+            Welcome Back to Hoplly
           </h1>
           <p className="text-xs text-muted">
             Log in to connect with trusted local helpers and tasks nearby
@@ -189,7 +189,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
 
         {/* Switch to Signup */}
         <p style={{ textAlign: 'center', fontSize: '12px', color: 'var(--text-muted)', marginTop: '8px' }}>
-          Don't have a Hoply account yet?{' '}
+          Don't have a Hoplly account yet?{' '}
           <button
             onClick={onNavigateToSignup}
             className="btn btn-ghost btn-sm"

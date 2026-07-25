@@ -163,7 +163,7 @@ const INITIAL_ALERTS = [
   {
     type: 'payment_received',
     title: 'Payment Received',
-    message: 'You received Rs. 120.00 for completing "Deep Cleaning 1BR Studio Apartment". Funds added to Hoply wallet.',
+    message: 'You received Rs. 120.00 for completing "Deep Cleaning 1BR Studio Apartment". Funds added to Hoplly wallet.',
     time: 'Yesterday',
     read: true,
   },

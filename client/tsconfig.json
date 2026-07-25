@@ -15,12 +15,16 @@
     "moduleDetection": "force",
     "allowJs": true,
     "jsx": "react-jsx",
+    "baseUrl": ".",
+    "types": ["react", "react-dom", "node"],
     "paths": {
       "@/*": [
         "./*"
       ]
     },
     "allowImportingTsExtensions": true,
+    "ignoreDeprecations": "6.0",
     "noEmit": true
-  }
+  },
+  "include": ["src", "vite.config.ts"]
 }

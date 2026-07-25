@@ -16,9 +16,40 @@ import { AssistantPage } from './pages/AssistantPage';
 import { LoginPage } from './pages/LoginPage';
 import { SignupPage } from './pages/SignupPage';
 
+const DEFAULT_ACCOUNTS: UserProfile[] = [
+  INITIAL_USER,
+  {
+    id: 'usr_jane',
+    name: 'Jane Doe',
+    email: 'jane.doe@gmail.com',
+    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=250',
+    googleSignedIn: true,
+    tasksPosted: 10,
+    tasksAccepted: 14,
+    tasksCompleted: 24,
+    rating: 4.8,
+    reviewsCount: 19,
+    memberSince: 'Jan 2024',
+  },
+  {
+    id: 'usr_alex',
+    name: 'Alex M. Helper',
+    email: 'alex.helper@gmail.com',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=250',
+    googleSignedIn: true,
+    tasksPosted: 5,
+    tasksAccepted: 32,
+    tasksCompleted: 37,
+    rating: 5.0,
+    reviewsCount: 45,
+    memberSince: 'Feb 2024',
+  },
+];
+
 export default function App() {
   const [activeTab, setActiveTab] = useState<string>('home');
   const [currentUser, setCurrentUser] = useState<UserProfile | null>(INITIAL_USER);
+  const [userAccounts, setUserAccounts] = useState<UserProfile[]>(DEFAULT_ACCOUNTS);
   const [tasks, setTasks] = useState<Task[]>(INITIAL_TASKS);
   const [alerts, setAlerts] = useState<Alert[]>(INITIAL_ALERTS);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
@@ -35,6 +66,16 @@ export default function App() {
     setTimeout(() => {
       setToastMessage(null);
     }, 3000);
+  };
+
+  const registerOrUpdateAccountList = (user: UserProfile) => {
+    setUserAccounts((prev) => {
+      const exists = prev.some((acc) => acc.email.toLowerCase() === user.email.toLowerCase());
+      if (exists) {
+        return prev.map((acc) => (acc.email.toLowerCase() === user.email.toLowerCase() ? user : acc));
+      }
+      return [...prev, user];
+    });
   };
 
   const handleSelectTask = (task: Task) => {
@@ -93,6 +134,51 @@ export default function App() {
     showToast('Task accepted! Added to your Accepted Tasks.');
   };
 
+  const handleCompleteTask = (taskId: string, e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+
+    const targetTask = tasks.find((t) => t.id === taskId);
+    if (!targetTask) return;
+
+    setTasks((prev) =>
+      prev.map((t) => {
+        if (t.id === taskId) {
+          return {
+            ...t,
+            status: 'completed',
+          };
+        }
+        return t;
+      })
+    );
+
+    if (currentUser) {
+      setCurrentUser((prev) =>
+        prev
+          ? {
+              ...prev,
+              tasksCompleted: prev.tasksCompleted + 1,
+            }
+          : null
+      );
+    }
+
+    // Trigger completion alert
+    const newAlert: Alert = {
+      id: `alt-${Date.now()}`,
+      type: 'task_completed',
+      title: 'Task Completed & Payment Released',
+      message: `"${targetTask.title}" is marked as complete. Compensation of Rs. ${targetTask.budget}.00 processed.`,
+      time: 'Just now',
+      read: false,
+      taskId: taskId,
+      actionLabel: 'Leave Review',
+    };
+    setAlerts((prev) => [newAlert, ...prev]);
+
+    showToast(`Task completed! Rs. ${targetTask.budget} payment processed.`);
+  };
+
   const handleAddTask = (newTaskData: Omit<Task, 'id' | 'postedAt'>) => {
     const createdTask: Task = {
       ...newTaskData,
@@ -130,15 +216,17 @@ export default function App() {
   };
 
   const handleUserLogin = (user: UserProfile) => {
+    registerOrUpdateAccountList(user);
     setCurrentUser(user);
     setActiveTab('home');
     showToast(`Welcome back, ${user.name}!`);
   };
 
   const handleUserSignup = (user: UserProfile) => {
+    registerOrUpdateAccountList(user);
     setCurrentUser(user);
     setActiveTab('home');
-    showToast(`Account created! Welcome to Hoply, ${user.name}!`);
+    showToast(`Account created! Welcome to Hoplly, ${user.name}!`);
   };
 
   const handleLogout = () => {
@@ -180,6 +268,7 @@ export default function App() {
             currentUser={currentUser}
             onSelectTask={handleSelectTask}
             onAcceptTask={handleAcceptTask}
+            onCompleteTask={handleCompleteTask}
             onNavigate={(tab) => setActiveTab(tab)}
           />
         )}
@@ -206,6 +295,7 @@ export default function App() {
             currentUser={currentUser}
             onSelectTask={handleSelectTask}
             onAcceptTask={handleAcceptTask}
+            onCompleteTask={handleCompleteTask}
             onNavigate={(tab) => setActiveTab(tab)}
           />
         )}
@@ -259,6 +349,10 @@ export default function App() {
                 prev ? { ...prev, status: 'accepted', acceptedBy: currentUser?.name || 'User' } : null
               );
             }}
+            onCompleteTask={(taskId) => {
+              handleCompleteTask(taskId);
+              setSelectedTask((prev) => (prev ? { ...prev, status: 'completed' } : null));
+            }}
             onNavigate={(tab) => setActiveTab(tab)}
           />
         )}
@@ -274,11 +368,12 @@ export default function App() {
         unreadCount={unreadAlertsCount}
       />
 
-      {/* Google Sign-In Modal */}
+      {/* Google Sign-In / Account Switcher Modal */}
       <GoogleSignInModal
         isOpen={isGoogleModalOpen}
         onClose={() => setIsGoogleModalOpen(false)}
         currentUser={currentUser || INITIAL_USER}
+        availableAccounts={userAccounts}
         onLoginSuccess={(updatedUser) => {
           handleUserLogin(updatedUser);
         }}

@@ -6,6 +6,7 @@ interface TaskDetailPageProps {
   task: Task;
   onBack: () => void;
   onAcceptTask: (taskId: string) => void;
+  onCompleteTask?: (taskId: string) => void;
   onNavigate: (tab: string) => void;
 }
 
@@ -13,10 +14,12 @@ export const TaskDetailPage: React.FC<TaskDetailPageProps> = ({
   task,
   onBack,
   onAcceptTask,
+  onCompleteTask,
   onNavigate,
 }) => {
   const isAccepted = task.status === 'accepted';
   const isCompleted = task.status === 'completed';
+  const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(task.location || 'India')}&output=embed&z=14`;
 
   return (
     <main className="page-container" style={{ paddingBottom: '96px' }}>
@@ -33,28 +36,17 @@ export const TaskDetailPage: React.FC<TaskDetailPageProps> = ({
       <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '32px' }}>
         {/* Left Column: Interactive Map Preview */}
         <div style={{ flex: '1 1 350px', minWidth: '300px' }}>
-          <div style={{ backgroundColor: 'var(--bg-muted)', borderRadius: '16px', border: '1px solid var(--border-color)', height: '384px', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-sm)' }}>
-            {/* Map visual representation */}
-            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, var(--bg-muted), rgba(22, 163, 74, 0.05))', opacity: 0.9 }} />
-            <div style={{ position: 'absolute', inset: 0, opacity: 0.1, backgroundImage: 'radial-gradient(var(--primary) 1px, transparent 1px)', backgroundSize: '16px 16px' }} />
-
-            {/* Glowing Map Pin */}
-            <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <div style={{ position: 'relative' }}>
-                <div style={{ position: 'absolute', inset: '-8px', borderRadius: '50%', backgroundColor: 'rgba(22, 163, 74, 0.2)' }} className="animate-pulse-subtle" />
-                <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: 'var(--primary)', color: '#fff', display: 'flex', alignItems: 'center', justifycontent: 'center', border: '2px solid #fff', boxShadow: 'var(--shadow-lg)' }}>
-                  <MapPin style={{ width: '24px', height: '24px', margin: '10px' }} />
-                </div>
-              </div>
-              <span style={{ marginTop: '8px', fontSize: '11px', fontWeight: 'bold', color: 'var(--text-main)', backgroundColor: 'var(--bg-card)', padding: '4px 12px', borderRadius: '9999px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-md)' }}>
-                {task.location}
-              </span>
-            </div>
-
-            {/* Distance badge */}
-            <div style={{ position: 'absolute', bottom: '16px', right: '16px', zIndex: 10, backgroundColor: 'var(--bg-card)', padding: '6px 12px', borderRadius: '12px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-md)', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', fontWeight: 'bold', color: 'var(--text-main)' }}>
+          <div style={{ backgroundColor: 'var(--bg-muted)', borderRadius: '16px', border: '1px solid var(--border-color)', height: '384px', position: 'relative', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
+            <iframe
+              src={mapSrc}
+              title={`Map preview for ${task.location}`}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              style={{ border: 0, width: '100%', height: '100%' }}
+            />
+            <div style={{ position: 'absolute', left: '12px', bottom: '12px', zIndex: 10, backgroundColor: 'rgba(255,255,255,0.95)', padding: '8px 12px', borderRadius: '999px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-md)', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', fontWeight: 'bold', color: 'var(--text-main)' }}>
               <MapPin style={{ width: '14px', height: '14px', color: 'var(--primary)' }} />
-              <span>{task.distance} away</span>
+              <span>{task.location}</span>
             </div>
           </div>
         </div>
@@ -164,8 +156,18 @@ export const TaskDetailPage: React.FC<TaskDetailPageProps> = ({
             {isAccepted && (
               <div className="flex-col gap-2" style={{ width: '100%' }}>
                 <div className="badge badge-green" style={{ width: '100%', padding: '12px', justifyContent: 'center', fontWeight: 'bold', fontSize: '13px' }}>
-                  Task Currently In Progress
+                  Task Currently In Progress ({task.acceptedBy || 'Accepted'})
                 </div>
+                {onCompleteTask && (
+                  <button
+                    onClick={() => onCompleteTask(task.id)}
+                    className="btn btn-primary btn-lg flex-row gap-2"
+                    style={{ width: '100%', backgroundColor: 'var(--primary-hover)' }}
+                  >
+                    <CheckCircle2 style={{ width: '20px', height: '20px' }} />
+                    <span>Mark as Completed & Release Funds (Rs. {task.budget})</span>
+                  </button>
+                )}
                 <button
                   onClick={() => onNavigate('assistant')}
                   className="btn btn-outline btn-md flex-row gap-2"
@@ -174,6 +176,13 @@ export const TaskDetailPage: React.FC<TaskDetailPageProps> = ({
                   <MessageSquare style={{ width: '16px', height: '16px' }} />
                   <span>Contact Task Poster ({task.posterName})</span>
                 </button>
+              </div>
+            )}
+
+            {isCompleted && (
+              <div className="badge badge-gray" style={{ width: '100%', padding: '14px', justifyContent: 'center', fontWeight: 'bold', fontSize: '14px' }}>
+                <CheckCircle2 style={{ width: '18px', height: '18px', color: 'var(--primary)', marginRight: '6px' }} />
+                <span>Task Successfully Completed</span>
               </div>
             )}
           </div>

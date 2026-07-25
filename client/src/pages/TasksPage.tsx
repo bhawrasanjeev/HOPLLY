@@ -8,6 +8,7 @@ interface TasksPageProps {
   currentUser: UserProfile | null;
   onSelectTask: (task: Task) => void;
   onAcceptTask: (taskId: string, e: React.MouseEvent) => void;
+  onCompleteTask?: (taskId: string, e: React.MouseEvent) => void;
   onNavigate: (tab: string) => void;
 }
 
@@ -16,6 +17,7 @@ export const TasksPage: React.FC<TasksPageProps> = ({
   currentUser,
   onSelectTask,
   onAcceptTask,
+  onCompleteTask,
   onNavigate,
 }) => {
   const [activeSubTab, setActiveSubTab] = useState<'posted' | 'accepted'>('posted');
@@ -89,6 +91,7 @@ export const TasksPage: React.FC<TasksPageProps> = ({
             task={task}
             onSelectTask={onSelectTask}
             onAcceptTask={onAcceptTask}
+            onCompleteTask={onCompleteTask}
           />
         ))}
 

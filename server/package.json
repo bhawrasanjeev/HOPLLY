@@ -1,7 +1,7 @@
 {
   "name": "hoplly-server",
   "version": "1.0.0",
-  "description": "Express + MongoDB backend server for Hoply Hyperlocal Community Task platform",
+  "description": "Express + MongoDB backend server for Hoplly Hyperlocal Community Task platform",
   "main": "server.js",
   "type": "module",
   "scripts": {

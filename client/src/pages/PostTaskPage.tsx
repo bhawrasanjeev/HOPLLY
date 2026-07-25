@@ -76,7 +76,7 @@ export const PostTaskPage: React.FC<PostTaskPageProps> = ({
           Task Posted Successfully!
         </h2>
         <p className="text-sm text-muted">
-          Your request is now live for nearby verified Hoply helpers. Redirecting...
+          Your request is now live for nearby verified Hoplly helpers. Redirecting...
         </p>
       </div>
     );
