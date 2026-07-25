@@ -1,12 +1,14 @@
 import React from 'react';
 import { Task } from '../types';
-import { ArrowLeft, MapPin, Clock, CheckCircle2, Star, MessageSquare } from 'lucide-react';
+import { ArrowLeft, MapPin, Clock, CheckCircle2, Star, MessageSquare, Phone } from 'lucide-react';
 
 interface TaskDetailPageProps {
   task: Task;
   onBack: () => void;
   onAcceptTask: (taskId: string) => void;
   onCompleteTask?: (taskId: string) => void;
+  onCallPoster?: (phone: string, posterName: string) => void;
+  onChatPoster?: (posterName: string) => void;
   onNavigate: (tab: string) => void;
 }
 
@@ -15,11 +17,30 @@ export const TaskDetailPage: React.FC<TaskDetailPageProps> = ({
   onBack,
   onAcceptTask,
   onCompleteTask,
+  onCallPoster,
+  onChatPoster,
   onNavigate,
 }) => {
   const isAccepted = task.status === 'accepted';
   const isCompleted = task.status === 'completed';
   const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(task.location || 'India')}&output=embed&z=14`;
+  const defaultPhone = task.posterPhone || '+91 98765 43210';
+
+  const handleCall = () => {
+    if (onCallPoster) {
+      onCallPoster(defaultPhone, task.posterName);
+    } else {
+      window.location.href = `tel:${defaultPhone.replace(/\s+/g, '')}`;
+    }
+  };
+
+  const handleChat = () => {
+    if (onChatPoster) {
+      onChatPoster(task.posterName);
+    } else {
+      onNavigate('assistant');
+    }
+  };
 
   return (
     <main className="page-container" style={{ paddingBottom: '96px' }}>
@@ -69,24 +90,50 @@ export const TaskDetailPage: React.FC<TaskDetailPageProps> = ({
               {task.title}
             </h1>
 
-            {/* Poster Info Card */}
-            <div className="flex-row gap-3" style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid var(--border-color)' }}>
-              <img
-                src={task.posterAvatar}
-                alt={task.posterName}
-                style={{ width: '48px', height: '48px', borderRadius: '50%', objectFit: 'cover', border: '1px solid var(--border-color)' }}
-              />
-              <div>
-                <h4 className="text-bold text-sm" style={{ color: 'var(--text-main)' }}>
-                  {task.posterName}
-                </h4>
-                <div className="flex-row gap-1 text-xs text-bold" style={{ color: 'var(--warning)', marginTop: '2px' }}>
-                  <Star style={{ width: '14px', height: '14px', fill: 'var(--warning)', color: 'var(--warning)' }} />
-                  <span>{task.posterRating || 4.9}</span>
-                  <span className="text-light" style={{ fontWeight: 'normal' }}>
-                    ({task.posterReviewsCount || 12} reviews)
-                  </span>
+            {/* Poster Info Card with Phone & Direct Call/Chat */}
+            <div className="flex-between" style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid var(--border-color)', flexWrap: 'wrap', gap: '12px' }}>
+              <div className="flex-row gap-3">
+                <img
+                  src={task.posterAvatar}
+                  alt={task.posterName}
+                  style={{ width: '48px', height: '48px', borderRadius: '50%', objectFit: 'cover', border: '1px solid var(--border-color)' }}
+                />
+                <div>
+                  <h4 className="text-bold text-sm" style={{ color: 'var(--text-main)' }}>
+                    {task.posterName}
+                  </h4>
+                  <div className="flex-row gap-1 text-xs text-bold" style={{ color: 'var(--warning)', marginTop: '2px' }}>
+                    <Star style={{ width: '14px', height: '14px', fill: 'var(--warning)', color: 'var(--warning)' }} />
+                    <span>{task.posterRating || 4.9}</span>
+                    <span className="text-light" style={{ fontWeight: 'normal' }}>
+                      ({task.posterReviewsCount || 12} reviews)
+                    </span>
+                  </div>
+                  <div className="flex-row gap-1 text-xs text-muted" style={{ marginTop: '4px' }}>
+                    <Phone style={{ width: '12px', height: '12px', color: 'var(--primary)' }} />
+                    <span className="text-bold" style={{ color: 'var(--primary)' }}>{defaultPhone}</span>
+                  </div>
                 </div>
+              </div>
+
+              {/* Quick Action Pills */}
+              <div className="flex-row gap-2">
+                <button
+                  onClick={handleCall}
+                  className="btn btn-outline btn-sm flex-row gap-1"
+                  style={{ borderRadius: '999px', padding: '6px 12px' }}
+                >
+                  <Phone style={{ width: '14px', height: '14px', color: 'var(--primary)' }} />
+                  <span>Call</span>
+                </button>
+                <button
+                  onClick={handleChat}
+                  className="btn btn-outline btn-sm flex-row gap-1"
+                  style={{ borderRadius: '999px', padding: '6px 12px' }}
+                >
+                  <MessageSquare style={{ width: '14px', height: '14px', color: 'var(--primary)' }} />
+                  <span>Chat (Demo)</span>
+                </button>
               </div>
             </div>
           </div>
@@ -143,14 +190,34 @@ export const TaskDetailPage: React.FC<TaskDetailPageProps> = ({
           {/* Action Bar */}
           <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {!isAccepted && !isCompleted && (
-              <button
-                onClick={() => onAcceptTask(task.id)}
-                className="btn btn-primary btn-lg flex-row gap-2"
-                style={{ width: '100%', padding: '16px' }}
-              >
-                <CheckCircle2 style={{ width: '20px', height: '20px' }} />
-                <span>Accept & Start Task (Rs. {task.budget})</span>
-              </button>
+              <div className="flex-col gap-2" style={{ width: '100%' }}>
+                <button
+                  onClick={() => onAcceptTask(task.id)}
+                  className="btn btn-primary btn-lg flex-row gap-2"
+                  style={{ width: '100%', padding: '16px' }}
+                >
+                  <CheckCircle2 style={{ width: '20px', height: '20px' }} />
+                  <span>Accept & Start Task (Rs. {task.budget})</span>
+                </button>
+                <div className="flex-row gap-2" style={{ width: '100%' }}>
+                  <button
+                    onClick={handleCall}
+                    className="btn btn-outline btn-md flex-row gap-2"
+                    style={{ flex: 1 }}
+                  >
+                    <Phone style={{ width: '16px', height: '16px', color: 'var(--primary)' }} />
+                    <span>Call Poster ({defaultPhone})</span>
+                  </button>
+                  <button
+                    onClick={handleChat}
+                    className="btn btn-outline btn-md flex-row gap-2"
+                    style={{ flex: 1 }}
+                  >
+                    <MessageSquare style={{ width: '16px', height: '16px', color: 'var(--primary)' }} />
+                    <span>Chat (Demo)</span>
+                  </button>
+                </div>
+              </div>
             )}
 
             {isAccepted && (
@@ -168,21 +235,51 @@ export const TaskDetailPage: React.FC<TaskDetailPageProps> = ({
                     <span>Mark as Completed & Release Funds (Rs. {task.budget})</span>
                   </button>
                 )}
-                <button
-                  onClick={() => onNavigate('assistant')}
-                  className="btn btn-outline btn-md flex-row gap-2"
-                  style={{ width: '100%' }}
-                >
-                  <MessageSquare style={{ width: '16px', height: '16px' }} />
-                  <span>Contact Task Poster ({task.posterName})</span>
-                </button>
+                <div className="flex-row gap-2" style={{ width: '100%' }}>
+                  <button
+                    onClick={handleCall}
+                    className="btn btn-outline btn-md flex-row gap-2"
+                    style={{ flex: 1 }}
+                  >
+                    <Phone style={{ width: '16px', height: '16px', color: 'var(--primary)' }} />
+                    <span>Call ({defaultPhone})</span>
+                  </button>
+                  <button
+                    onClick={handleChat}
+                    className="btn btn-outline btn-md flex-row gap-2"
+                    style={{ flex: 1 }}
+                  >
+                    <MessageSquare style={{ width: '16px', height: '16px', color: 'var(--primary)' }} />
+                    <span>Chat (Demo)</span>
+                  </button>
+                </div>
               </div>
             )}
 
             {isCompleted && (
-              <div className="badge badge-gray" style={{ width: '100%', padding: '14px', justifyContent: 'center', fontWeight: 'bold', fontSize: '14px' }}>
-                <CheckCircle2 style={{ width: '18px', height: '18px', color: 'var(--primary)', marginRight: '6px' }} />
-                <span>Task Successfully Completed</span>
+              <div className="flex-col gap-2" style={{ width: '100%' }}>
+                <div className="badge badge-gray" style={{ width: '100%', padding: '14px', justifyContent: 'center', fontWeight: 'bold', fontSize: '14px' }}>
+                  <CheckCircle2 style={{ width: '18px', height: '18px', color: 'var(--primary)', marginRight: '6px' }} />
+                  <span>Task Successfully Completed</span>
+                </div>
+                <div className="flex-row gap-2" style={{ width: '100%' }}>
+                  <button
+                    onClick={handleCall}
+                    className="btn btn-outline btn-md flex-row gap-2"
+                    style={{ flex: 1 }}
+                  >
+                    <Phone style={{ width: '16px', height: '16px', color: 'var(--primary)' }} />
+                    <span>Call Poster</span>
+                  </button>
+                  <button
+                    onClick={handleChat}
+                    className="btn btn-outline btn-md flex-row gap-2"
+                    style={{ flex: 1 }}
+                  >
+                    <MessageSquare style={{ width: '16px', height: '16px', color: 'var(--primary)' }} />
+                    <span>Chat (Demo)</span>
+                  </button>
+                </div>
               </div>
             )}
           </div>

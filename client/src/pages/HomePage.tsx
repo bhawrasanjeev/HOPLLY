@@ -11,6 +11,8 @@ interface HomePageProps {
   onSelectTask: (task: Task) => void;
   onAcceptTask: (taskId: string, e: React.MouseEvent) => void;
   onCompleteTask?: (taskId: string, e: React.MouseEvent) => void;
+  onCallPoster?: (phone: string, posterName: string, e: React.MouseEvent) => void;
+  onChatPoster?: (posterName: string, e: React.MouseEvent) => void;
   onNavigate: (tab: string) => void;
 }
 
@@ -21,6 +23,8 @@ export const HomePage: React.FC<HomePageProps> = ({
   onSelectTask,
   onAcceptTask,
   onCompleteTask,
+  onCallPoster,
+  onChatPoster,
   onNavigate,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -163,6 +167,8 @@ export const HomePage: React.FC<HomePageProps> = ({
                 onSelectTask={onSelectTask}
                 onAcceptTask={onAcceptTask}
                 onCompleteTask={onCompleteTask}
+                onCallPoster={onCallPoster}
+                onChatPoster={onChatPoster}
               />
             ))}
           </div>

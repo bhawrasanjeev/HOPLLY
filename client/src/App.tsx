@@ -65,7 +65,7 @@ export default function App() {
     setToastMessage(msg);
     setTimeout(() => {
       setToastMessage(null);
-    }, 3000);
+    }, 3200);
   };
 
   const registerOrUpdateAccountList = (user: UserProfile) => {
@@ -122,7 +122,7 @@ export default function App() {
         id: `alt-${Date.now()}`,
         type: 'task_accepted',
         title: 'Task Accepted Successfully',
-        message: `You accepted "${targetTask.title}". You can contact ${targetTask.posterName} via AI Assistant support or messages.`,
+        message: `You accepted "${targetTask.title}". Contact ${targetTask.posterName} at ${targetTask.posterPhone || '+91 98765 43210'}.`,
         time: 'Just now',
         read: false,
         taskId: taskId,
@@ -179,11 +179,25 @@ export default function App() {
     showToast(`Task completed! Rs. ${targetTask.budget} payment processed.`);
   };
 
+  const handleCallPoster = (phone: string, posterName: string, e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    showToast(`📞 Calling ${posterName} at ${phone}...`);
+    setTimeout(() => {
+      window.location.href = `tel:${phone.replace(/\s+/g, '')}`;
+    }, 500);
+  };
+
+  const handleChatPoster = (posterName: string, e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    showToast(`💬 Demo Chat: Opening direct chat room with ${posterName}...`);
+  };
+
   const handleAddTask = (newTaskData: Omit<Task, 'id' | 'postedAt'>) => {
     const createdTask: Task = {
       ...newTaskData,
       id: `task-${Date.now()}`,
       postedAt: 'Just now',
+      posterPhone: currentUser?.email === 'bhawsanjeev102@gmail.com' ? '+91 98765 43210' : '+91 91234 56789',
     };
 
     setTasks((prev) => [createdTask, ...prev]);
@@ -269,6 +283,8 @@ export default function App() {
             onSelectTask={handleSelectTask}
             onAcceptTask={handleAcceptTask}
             onCompleteTask={handleCompleteTask}
+            onCallPoster={handleCallPoster}
+            onChatPoster={handleChatPoster}
             onNavigate={(tab) => setActiveTab(tab)}
           />
         )}
@@ -296,6 +312,8 @@ export default function App() {
             onSelectTask={handleSelectTask}
             onAcceptTask={handleAcceptTask}
             onCompleteTask={handleCompleteTask}
+            onCallPoster={handleCallPoster}
+            onChatPoster={handleChatPoster}
             onNavigate={(tab) => setActiveTab(tab)}
           />
         )}
@@ -353,6 +371,8 @@ export default function App() {
               handleCompleteTask(taskId);
               setSelectedTask((prev) => (prev ? { ...prev, status: 'completed' } : null));
             }}
+            onCallPoster={(phone, posterName) => handleCallPoster(phone, posterName)}
+            onChatPoster={(posterName) => handleChatPoster(posterName)}
             onNavigate={(tab) => setActiveTab(tab)}
           />
         )}

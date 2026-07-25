@@ -15,6 +15,7 @@ export interface Task {
   posterAvatar: string;
   posterRating?: number;
   posterReviewsCount?: number;
+  posterPhone?: string;
   acceptedBy?: string;
   acceptedByAvatar?: string;
   requiredTools?: string;
