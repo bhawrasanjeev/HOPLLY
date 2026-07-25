@@ -6,9 +6,15 @@ interface TaskCardProps {
   task: Task;
   onSelectTask: (task: Task) => void;
   onAcceptTask: (taskId: string, e: React.MouseEvent) => void;
+  onCompleteTask?: (taskId: string, e: React.MouseEvent) => void;
 }
 
-export const TaskCard: React.FC<TaskCardProps> = ({ task, onSelectTask, onAcceptTask }) => {
+export const TaskCard: React.FC<TaskCardProps> = ({
+  task,
+  onSelectTask,
+  onAcceptTask,
+  onCompleteTask,
+}) => {
   const isPending = task.status === 'pending';
   const isAccepted = task.status === 'accepted';
   const isCompleted = task.status === 'completed';
@@ -71,14 +77,27 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onSelectTask, onAccept
         )}
 
         {isAccepted && (
-          <div className="badge badge-green" style={{ width: '100%', padding: '8px', display: 'flex', justifyContent: 'center', gap: '6px' }}>
-            <CheckCircle2 style={{ width: '16px', height: '16px' }} />
-            <span>In Progress ({task.acceptedBy || 'Accepted'})</span>
+          <div className="flex-col gap-1.5" style={{ width: '100%' }}>
+            {onCompleteTask && (
+              <button
+                onClick={(e) => onCompleteTask(task.id, e)}
+                className="btn btn-primary btn-sm flex-row gap-1.5"
+                style={{ width: '100%', backgroundColor: 'var(--primary-hover)' }}
+              >
+                <CheckCircle2 style={{ width: '16px', height: '16px' }} />
+                <span>Mark as Completed</span>
+              </button>
+            )}
+            <div className="badge badge-green" style={{ width: '100%', padding: '6px', display: 'flex', justifyContent: 'center', gap: '6px' }}>
+              <CheckCircle2 style={{ width: '14px', height: '14px' }} />
+              <span>In Progress ({task.acceptedBy || 'Accepted'})</span>
+            </div>
           </div>
         )}
 
         {isCompleted && (
-          <div className="badge badge-gray" style={{ width: '100%', padding: '8px', display: 'flex', justifyContent: 'center' }}>
+          <div className="badge badge-gray" style={{ width: '100%', padding: '8px', display: 'flex', justifyContent: 'center', gap: '6px' }}>
+            <CheckCircle2 style={{ width: '16px', height: '16px', color: 'var(--primary)' }} />
             <span>Task Completed</span>
           </div>
         )}

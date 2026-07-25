@@ -10,6 +10,7 @@ interface HomePageProps {
   currentUser: UserProfile | null;
   onSelectTask: (task: Task) => void;
   onAcceptTask: (taskId: string, e: React.MouseEvent) => void;
+  onCompleteTask?: (taskId: string, e: React.MouseEvent) => void;
   onNavigate: (tab: string) => void;
 }
 
@@ -19,6 +20,7 @@ export const HomePage: React.FC<HomePageProps> = ({
   currentUser,
   onSelectTask,
   onAcceptTask,
+  onCompleteTask,
   onNavigate,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -160,6 +162,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 task={task}
                 onSelectTask={onSelectTask}
                 onAcceptTask={onAcceptTask}
+                onCompleteTask={onCompleteTask}
               />
             ))}
           </div>
@@ -192,7 +195,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       <button
         onClick={() => onNavigate('assistant')}
         className="ai-floating-btn"
-        title="Ask Hoply AI Assistant"
+        title="Ask Hoplly AI Assistant"
       >
         <Sparkles style={{ width: '24px', height: '24px' }} />
       </button>

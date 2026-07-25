@@ -1,5 +1,5 @@
 {
-  "name": "Hoply",
+  "name": "Hoplly",
   "description": "Hyperlocal task marketplace connecting local neighbors with verified helpers, featuring Google Sign-In, AI task assistant, and project ZIP exporter.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]

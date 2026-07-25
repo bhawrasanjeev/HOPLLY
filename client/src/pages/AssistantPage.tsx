@@ -12,7 +12,7 @@ export const AssistantPage: React.FC<AssistantPageProps> = ({ onNavigate }) => {
     {
       id: 'm1',
       sender: 'assistant',
-      text: "Hi there!  Welcome to Hoply Assistant. Powered by Google Gemini AI. How can I help you with neighborhood tasks, rate estimates, or drafting details today?",
+      text: "Hi there! 👋 Welcome to Hoplly Assistant. Powered by Google Gemini AI. How can I help you with neighborhood tasks, rate estimates, or drafting details today?",
       timestamp: '10:42 AM',
     },
     {
@@ -34,7 +34,7 @@ export const AssistantPage: React.FC<AssistantPageProps> = ({ onNavigate }) => {
 
   const quickPrompts = [
     { label: 'Draft Grocery Task', icon: Edit3, prompt: 'Help me draft a task for picking up weekly groceries from Whole Foods.' },
-    { label: 'Safety & Verification', icon: ShieldAlert, prompt: 'How does Hoply verify local helpers and ensure safety?' },
+    { label: 'Safety & Verification', icon: ShieldAlert, prompt: 'How does Hoplly verify local helpers and ensure safety?' },
     { label: 'Pricing Guide', icon: IndianRupee, prompt: 'What are the recommended hourly rates for lawn mowing and handyman tasks?' },
   ];
 
@@ -69,7 +69,7 @@ export const AssistantPage: React.FC<AssistantPageProps> = ({ onNavigate }) => {
           try {
             const response = await ai.models.generateContent({
               model: modelName,
-              contents: `You are Hoply AI Assistant, an expert AI helper for Hoply (a hyperlocal community task app). Currency is always in Rs. Answer helpful, friendly, clear, and concise to: ${userPrompt}`,
+              contents: `You are Hoplly AI Assistant, an expert AI helper for Hoplly (a hyperlocal community task app). Currency is always in Rs. Answer helpful, friendly, clear, and concise to: ${userPrompt}`,
             });
             if (response?.text) return response.text;
           } catch (mErr) {
@@ -86,12 +86,12 @@ export const AssistantPage: React.FC<AssistantPageProps> = ({ onNavigate }) => {
     if (lower.includes('grocery')) {
       return "Great idea! I've pre-configured an optimal grocery delivery draft:\n- Recommended Budget: Rs. 25\n- Average Acceptance Time: 8 minutes\n- Category: Grocery\n\nWould you like to post this task now?";
     } else if (lower.includes('safety') || lower.includes('verify')) {
-      return "Safety is Hoply's top priority! All helpers undergo ID verification, local rating checks, and community reviews. Payments are safely held in escrow until you approve task completion.";
+      return "Safety is Hoplly's top priority! All helpers undergo ID verification, local rating checks, and community reviews. Payments are safely held in escrow until you approve task completion.";
     } else if (lower.includes('price') || lower.includes('rate') || lower.includes('cost') || lower.includes('mow')) {
-      return "Hoply Hyperlocal Rate Standards:\n- Grocery Pickup: Rs. 20 - Rs. 30\n- Handyman Repairs: Rs. 45 - Rs. 75/hr\n- Dog Walking: Rs. 15 - Rs. 25 (30 mins)\n- Deep Cleaning: Rs. 70 - Rs. 120";
+      return "Hoplly Hyperlocal Rate Standards:\n- Grocery Pickup: Rs. 20 - Rs. 30\n- Handyman Repairs: Rs. 45 - Rs. 75/hr\n- Dog Walking: Rs. 15 - Rs. 25 (30 mins)\n- Deep Cleaning: Rs. 70 - Rs. 120";
     }
 
-    return "I'm here to help! Hoply connects you directly with background-checked local neighbors. You can post a task or accept open jobs instantly in your feed.";
+    return "I'm here to help! Hoplly connects you directly with background-checked local neighbors. You can post a task or accept open jobs instantly in your feed.";
   };
 
   const handleSendMessage = async (textToSend?: string) => {
@@ -122,7 +122,7 @@ export const AssistantPage: React.FC<AssistantPageProps> = ({ onNavigate }) => {
       const botMsg: ChatMessage = {
         id: (Date.now() + 1).toString(),
         sender: 'assistant',
-        text: "I'm here to help! Hoply connects you directly with background-checked local neighbors.",
+        text: "I'm here to help! Hoplly connects you directly with background-checked local neighbors.",
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
       setMessages((prev) => [...prev, botMsg]);
@@ -142,7 +142,7 @@ export const AssistantPage: React.FC<AssistantPageProps> = ({ onNavigate }) => {
             </div>
             <div>
               <h2 className="h3-title" style={{ fontSize: '0.95rem' }}>
-                Hoply AI Assistant
+                Hoplly AI Assistant
               </h2>
               <p className="text-xs text-muted" style={{ fontSize: '11px', marginTop: '2px' }}>
                 Powered by Gemini AI • Always active for neighborhood help
@@ -182,7 +182,7 @@ export const AssistantPage: React.FC<AssistantPageProps> = ({ onNavigate }) => {
           {isTyping && (
             <div className="flex-row gap-2 text-xs text-muted" style={{ padding: '12px', backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)', borderRadius: '12px', width: 'fit-content' }}>
               <Sparkles className="animate-spin" style={{ width: '14px', height: '14px', color: 'var(--primary)' }} />
-              <span>Hoply AI is typing...</span>
+              <span>Hoplly AI is typing...</span>
             </div>
           )}
         </div>

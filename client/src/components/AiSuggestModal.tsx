@@ -68,7 +68,7 @@ export const AiSuggestModal: React.FC<AiSuggestModalProps> = ({
         {/* Subtitle */}
         <div style={{ padding: '16px 24px 0 24px' }}>
           <p className="text-sm text-muted">
-            Based on your task details, Hoply AI calculated the optimal parameters for fastest local helper match rate:
+            Based on your task details, Hoplly AI calculated the optimal parameters for fastest local helper match rate:
           </p>
         </div>
 

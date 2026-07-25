@@ -72,7 +72,7 @@ export const SignupPage: React.FC<SignupPageProps> = ({
             <Logo size="lg" />
           </div>
           <h1 className="h1-title" style={{ fontSize: '1.5rem' }}>
-            Create Your Hoply Account
+            Create Your Hoplly Account
           </h1>
           <p className="text-xs text-muted">
             Join your hyperlocal neighborhood network to request or help with tasks

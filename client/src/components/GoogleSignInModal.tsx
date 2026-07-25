@@ -6,6 +6,7 @@ interface GoogleSignInModalProps {
   isOpen: boolean;
   onClose: () => void;
   currentUser: UserProfile;
+  availableAccounts?: { name: string; email: string; avatar: string }[];
   onLoginSuccess: (updatedUser: UserProfile) => void;
 }
 
@@ -13,6 +14,7 @@ export const GoogleSignInModal: React.FC<GoogleSignInModalProps> = ({
   isOpen,
   onClose,
   currentUser,
+  availableAccounts,
   onLoginSuccess,
 }) => {
   const [step, setStep] = useState<'choose' | 'custom' | 'success'>('choose');
@@ -39,6 +41,8 @@ export const GoogleSignInModal: React.FC<GoogleSignInModalProps> = ({
       avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=250',
     },
   ];
+
+  const accountsToDisplay = availableAccounts && availableAccounts.length > 0 ? availableAccounts : defaultAccounts;
 
   const handleSelectAccount = (acc: { name: string; email: string; avatar: string }) => {
     setSelectedAccount(acc.email);
@@ -126,13 +130,13 @@ export const GoogleSignInModal: React.FC<GoogleSignInModalProps> = ({
                   Choose an account
                 </h3>
                 <p className="text-sm text-muted">
-                  to continue to <span className="text-bold" style={{ color: 'var(--primary)' }}>Hoply</span>
+                  to continue to <span className="text-bold" style={{ color: 'var(--primary)' }}>Hoplly</span>
                 </p>
               </div>
 
               {/* Account List */}
               <div className="flex-col gap-2">
-                {defaultAccounts.map((acc) => (
+                {accountsToDisplay.map((acc) => (
                   <button
                     key={acc.email}
                     onClick={() => handleSelectAccount(acc)}
@@ -213,7 +217,7 @@ export const GoogleSignInModal: React.FC<GoogleSignInModalProps> = ({
 
               <div style={{ marginTop: '16px', fontSize: '12px', color: 'var(--text-muted)', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
                 <Shield style={{ width: '14px', height: '14px', color: 'var(--primary)' }} />
-                <span>Protected by Google OAuth 2.0 Security & Hoply Encryption</span>
+                <span>Protected by Google OAuth 2.0 Security & Hoplly Encryption</span>
               </div>
             </div>
           )}

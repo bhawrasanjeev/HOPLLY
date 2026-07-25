@@ -23,7 +23,7 @@ app.use('/api/assistant', assistantRoutes);
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'online',
-    service: 'Hoply Express Backend',
+    service: 'Hoplly Express Backend',
     timestamp: new Date().toISOString(),
   });
 });

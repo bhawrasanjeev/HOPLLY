@@ -6,6 +6,7 @@ interface TaskDetailPageProps {
   task: Task;
   onBack: () => void;
   onAcceptTask: (taskId: string) => void;
+  onCompleteTask?: (taskId: string) => void;
   onNavigate: (tab: string) => void;
 }
 
@@ -13,6 +14,7 @@ export const TaskDetailPage: React.FC<TaskDetailPageProps> = ({
   task,
   onBack,
   onAcceptTask,
+  onCompleteTask,
   onNavigate,
 }) => {
   const isAccepted = task.status === 'accepted';
@@ -154,8 +156,18 @@ export const TaskDetailPage: React.FC<TaskDetailPageProps> = ({
             {isAccepted && (
               <div className="flex-col gap-2" style={{ width: '100%' }}>
                 <div className="badge badge-green" style={{ width: '100%', padding: '12px', justifyContent: 'center', fontWeight: 'bold', fontSize: '13px' }}>
-                  Task Currently In Progress
+                  Task Currently In Progress ({task.acceptedBy || 'Accepted'})
                 </div>
+                {onCompleteTask && (
+                  <button
+                    onClick={() => onCompleteTask(task.id)}
+                    className="btn btn-primary btn-lg flex-row gap-2"
+                    style={{ width: '100%', backgroundColor: 'var(--primary-hover)' }}
+                  >
+                    <CheckCircle2 style={{ width: '20px', height: '20px' }} />
+                    <span>Mark as Completed & Release Funds (Rs. {task.budget})</span>
+                  </button>
+                )}
                 <button
                   onClick={() => onNavigate('assistant')}
                   className="btn btn-outline btn-md flex-row gap-2"
@@ -164,6 +176,13 @@ export const TaskDetailPage: React.FC<TaskDetailPageProps> = ({
                   <MessageSquare style={{ width: '16px', height: '16px' }} />
                   <span>Contact Task Poster ({task.posterName})</span>
                 </button>
+              </div>
+            )}
+
+            {isCompleted && (
+              <div className="badge badge-gray" style={{ width: '100%', padding: '14px', justifyContent: 'center', fontWeight: 'bold', fontSize: '14px' }}>
+                <CheckCircle2 style={{ width: '18px', height: '18px', color: 'var(--primary)', marginRight: '6px' }} />
+                <span>Task Successfully Completed</span>
               </div>
             )}
           </div>

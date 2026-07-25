@@ -130,7 +130,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               <div className="flex-row gap-3">
                 <CreditCard style={{ width: '20px', height: '20px', color: 'var(--text-muted)' }} />
                 <span className="text-bold" style={{ color: 'var(--text-main)' }}>
-                  Payment Methods & Hoply Wallet
+                  Payment Methods & Hoplly Wallet
                 </span>
               </div>
               <span className="text-xs text-muted" style={{ fontFamily: 'monospace' }}>Rs. 145.00 Balance</span>

@@ -20,7 +20,7 @@ const startServer = async () => {
 
   const startOnPort = (port) => {
     const server = app.listen(port, () => {
-      console.log(`Hoply Express Backend Server running on port ${port}`);
+      console.log(`🚀 Hoplly Express Backend Server running on port ${PORT}`);
       console.log(`Health Check: http://localhost:${port}/api/health`);
     });
 
