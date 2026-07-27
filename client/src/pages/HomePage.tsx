@@ -3,6 +3,7 @@ import { Search, Plus, Sparkles, MapPin, ArrowRight } from 'lucide-react';
 import { Task, Category, UserProfile } from '../types';
 import { TaskCard } from '../components/TaskCard';
 import { Chip } from '../components/UiComponents';
+import './HomePage.css';
 
 interface HomePageProps {
   tasks: Task[];
@@ -112,25 +113,25 @@ export const HomePage: React.FC<HomePageProps> = ({
       {/* CTA Hero Banner */}
       <section className="hero-banner">
         <div className="hero-content">
-          <div className="hero-text-wrap">
-            <span className="hero-pill">
-              Hyperlocal Community
-            </span>
-            <h2 className="hero-title">
-              Need something done fast?
-            </h2>
-            <p className="hero-description">
-              Post your task and get verified local helpers to respond within minutes.
-            </p>
-          </div>
-          <button
-            onClick={() => onNavigate('post')}
-            className="hero-btn"
-          >
-            <Plus style={{ width: '20px', height: '20px' }} />
-            <span>Post a Task</span>
-          </button>
+          <span className="hero-pill">
+            Hyperlocal Community
+          </span>
+          <h2 className="hero-title">
+            Need something done fast?
+          </h2>
+          <p className="hero-description">
+            Post your task and get verified local helpers to respond within minutes.
+          </p>
         </div>
+
+        <button
+          onClick={() => onNavigate('post')}
+          className="hero-btn"
+        >
+          <Plus style={{ width: '20px', height: '20px' }} />
+          <span>Post a Task</span>
+        </button>
+
         {/* Background decorative circles */}
         <div className="hero-circle-deco" />
       </section>

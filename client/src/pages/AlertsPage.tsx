@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Alert } from '../types';
 import { Bell, CheckCircle2, Navigation, IndianRupee, ArrowRight } from 'lucide-react';
+import './AlertsPage.css';
 
 interface AlertsPageProps {
   alerts: Alert[];

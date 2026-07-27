@@ -189,7 +189,7 @@ export default function App() {
 
   const handleChatPoster = (posterName: string, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
-    showToast(`💬 Demo Chat: Opening direct chat room with ${posterName}...`);
+    showToast(`💬 Opening direct chat room with ${posterName}...`);
   };
 
   const handleAddTask = (newTaskData: Omit<Task, 'id' | 'postedAt'>) => {

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Mail, Lock, LogIn, Eye, EyeOff, ShieldCheck } from 'lucide-react';
 import { Logo } from '../components/Logo';
 import { UserProfile } from '../types';
+import './AuthPages.css';
 
 interface LoginPageProps {
   onLoginSuccess: (user: UserProfile) => void;

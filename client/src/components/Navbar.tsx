@@ -2,6 +2,7 @@ import React from 'react';
 import { Logo } from './Logo';
 import { UserProfile } from '../types';
 import { User, Bell, Sparkles, LogIn, UserPlus } from 'lucide-react';
+import './Navbar.css';
 
 interface NavbarProps {
   activeTab: string;

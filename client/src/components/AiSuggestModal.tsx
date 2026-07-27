@@ -1,5 +1,6 @@
 import React from 'react';
 import { X, Bot, ArrowRight, MapPin, IndianRupee, Tag, Clock } from 'lucide-react';
+import './AiSuggestModal.css';
 
 interface AiSuggestModalProps {
   isOpen: boolean;

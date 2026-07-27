@@ -1,6 +1,7 @@
 import React from 'react';
 import { MapPin, Clock, CheckCircle2, Phone, MessageSquare } from 'lucide-react';
 import { Task } from '../types';
+import './TaskCard.css';
 
 interface TaskCardProps {
   task: Task;
@@ -114,7 +115,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({
                 title={`Chat with ${task.posterName}`}
               >
                 <MessageSquare style={{ width: '13px', height: '13px', color: 'var(--primary)' }} />
-                <span>Chat (Demo)</span>
+                <span>Chat</span>
               </button>
             </div>
           </div>
@@ -148,7 +149,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({
                 style={{ flex: 1, fontSize: '11px', padding: '6px 8px' }}
               >
                 <MessageSquare style={{ width: '13px', height: '13px', color: 'var(--primary)' }} />
-                <span>Chat (Demo)</span>
+                <span>Chat</span>
               </button>
             </div>
 
@@ -180,7 +181,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({
                 style={{ flex: 1, fontSize: '11px', padding: '6px 8px' }}
               >
                 <MessageSquare style={{ width: '13px', height: '13px', color: 'var(--primary)' }} />
-                <span>Chat (Demo)</span>
+                <span>Chat</span>
               </button>
             </div>
           </div>

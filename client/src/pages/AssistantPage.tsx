@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Sparkles, Send, Bot, User, Edit3, ShieldAlert, IndianRupee, ArrowRight } from 'lucide-react';
 import { GoogleGenAI } from '@google/genai';
 import { ChatMessage } from '../types';
+import './AssistantPage.css';
 
 interface AssistantPageProps {
   onNavigate: (tab: string) => void;
