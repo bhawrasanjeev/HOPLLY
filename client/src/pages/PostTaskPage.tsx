@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Sparkles, MapPin, Send, CheckCircle2, ChevronDown } from 'lucide-react';
 import { Category, Task, UserProfile } from '../types';
 import { AiSuggestModal } from '../components/AiSuggestModal';
+import './PostTaskPage.css';
 
 interface PostTaskPageProps {
   categories: Category[];

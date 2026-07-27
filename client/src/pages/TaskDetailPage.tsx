@@ -1,6 +1,7 @@
 import React from 'react';
 import { Task } from '../types';
 import { ArrowLeft, MapPin, Clock, CheckCircle2, Star, MessageSquare, Phone } from 'lucide-react';
+import './TaskDetailPage.css';
 
 interface TaskDetailPageProps {
   task: Task;
@@ -57,7 +58,7 @@ export const TaskDetailPage: React.FC<TaskDetailPageProps> = ({
       <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '32px' }}>
         {/* Left Column: Interactive Map Preview */}
         <div style={{ flex: '1 1 350px', minWidth: '300px' }}>
-          <div style={{ backgroundColor: 'var(--bg-muted)', borderRadius: '16px', border: '1px solid var(--border-color)', height: '384px', position: 'relative', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
+          <div className="task-detail-map-box">
             <iframe
               src={mapSrc}
               title={`Map preview for ${task.location}`}
@@ -65,7 +66,7 @@ export const TaskDetailPage: React.FC<TaskDetailPageProps> = ({
               referrerPolicy="no-referrer-when-downgrade"
               style={{ border: 0, width: '100%', height: '100%' }}
             />
-            <div style={{ position: 'absolute', left: '12px', bottom: '12px', zIndex: 10, backgroundColor: 'rgba(255,255,255,0.95)', padding: '8px 12px', borderRadius: '999px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-md)', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', fontWeight: 'bold', color: 'var(--text-main)' }}>
+            <div className="task-detail-map-badge">
               <MapPin style={{ width: '14px', height: '14px', color: 'var(--primary)' }} />
               <span>{task.location}</span>
             </div>
@@ -132,7 +133,7 @@ export const TaskDetailPage: React.FC<TaskDetailPageProps> = ({
                   style={{ borderRadius: '999px', padding: '6px 12px' }}
                 >
                   <MessageSquare style={{ width: '14px', height: '14px', color: 'var(--primary)' }} />
-                  <span>Chat (Demo)</span>
+                  <span>Chat</span>
                 </button>
               </div>
             </div>
@@ -214,7 +215,7 @@ export const TaskDetailPage: React.FC<TaskDetailPageProps> = ({
                     style={{ flex: 1 }}
                   >
                     <MessageSquare style={{ width: '16px', height: '16px', color: 'var(--primary)' }} />
-                    <span>Chat (Demo)</span>
+                    <span>Chat</span>
                   </button>
                 </div>
               </div>
@@ -250,7 +251,7 @@ export const TaskDetailPage: React.FC<TaskDetailPageProps> = ({
                     style={{ flex: 1 }}
                   >
                     <MessageSquare style={{ width: '16px', height: '16px', color: 'var(--primary)' }} />
-                    <span>Chat (Demo)</span>
+                    <span>Chat</span>
                   </button>
                 </div>
               </div>
@@ -277,7 +278,7 @@ export const TaskDetailPage: React.FC<TaskDetailPageProps> = ({
                     style={{ flex: 1 }}
                   >
                     <MessageSquare style={{ width: '16px', height: '16px', color: 'var(--primary)' }} />
-                    <span>Chat (Demo)</span>
+                    <span>Chat</span>
                   </button>
                 </div>
               </div>

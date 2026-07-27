@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Task, UserProfile } from '../types';
 import { TaskCard } from '../components/TaskCard';
 import { Plus } from 'lucide-react';
+import './TasksPage.css';
 
 interface TasksPageProps {
   tasks: Task[];

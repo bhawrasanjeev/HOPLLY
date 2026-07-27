@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Check, Shield, User, Mail, Sparkles } from 'lucide-react';
 import { UserProfile } from '../types';
+import './GoogleSignInModal.css';
 
 interface GoogleSignInModalProps {
   isOpen: boolean;

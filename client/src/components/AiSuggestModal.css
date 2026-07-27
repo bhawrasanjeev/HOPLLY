@@ -1,0 +1,23 @@
+/* AiSuggestModal Component Modular Styles */
+.ai-suggest-badge-header {
+  background: linear-gradient(135deg, rgba(22, 163, 74, 0.1), rgba(132, 204, 22, 0.15));
+  border: 1px solid rgba(22, 163, 74, 0.2);
+  color: var(--primary);
+  padding: 12px 20px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.ai-suggest-card-highlight {
+  background-color: var(--bg-muted);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

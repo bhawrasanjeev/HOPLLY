@@ -1,5 +1,6 @@
 import React from 'react';
 import { Home, ClipboardList, PlusCircle, Bell, User } from 'lucide-react';
+import './BottomNav.css';
 
 interface BottomNavProps {
   activeTab: string;

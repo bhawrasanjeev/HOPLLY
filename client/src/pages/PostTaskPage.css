@@ -1,0 +1,22 @@
+/* PostTaskPage Component Modular Styles */
+.post-task-card {
+  background-color: var(--bg-card);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-color);
+  padding: 28px;
+  box-shadow: var(--shadow-md);
+  max-width: 768px;
+  margin: 0 auto;
+}
+
+.ai-prompt-banner {
+  background: linear-gradient(135deg, rgba(22, 163, 74, 0.08), rgba(132, 204, 22, 0.12));
+  border: 1px solid rgba(22, 163, 74, 0.2);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}

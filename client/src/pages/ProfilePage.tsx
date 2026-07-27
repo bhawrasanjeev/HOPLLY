@@ -1,6 +1,7 @@
 import React from 'react';
 import { UserProfile } from '../types';
 import { CheckCircle, Shield, CreditCard, Bell, HelpCircle, LogOut } from 'lucide-react';
+import './ProfilePage.css';
 
 interface ProfilePageProps {
   currentUser: UserProfile;
@@ -19,7 +20,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
       <div style={{ flex: '1 1 300px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
         {/* Identity Card */}
         <section className="profile-card">
-          <div style={{ width: '112px', height: '112px', borderRadius: '50%', overflow: 'hidden', border: '4px solid var(--border-color)', boxShadow: 'var(--shadow-md)', marginBottom: '4px' }}>
+          <div style={{ width: '96px', height: '96px', borderRadius: '50%', overflow: 'hidden', border: '3px solid var(--primary)', boxShadow: 'var(--shadow-md)', marginBottom: '12px' }}>
             <img
               src={currentUser.avatar}
               alt={currentUser.name}
@@ -30,7 +31,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
           <h2 className="h2-title">
             {currentUser.name}
           </h2>
-          <p className="text-xs text-muted" style={{ fontFamily: 'monospace', marginTop: '2px' }}>
+          <p className="text-xs text-muted" style={{ fontFamily: 'monospace', marginTop: '4px' }}>
             {currentUser.email}
           </p>
 
